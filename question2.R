@@ -18,6 +18,10 @@ df_cancer_deaths <- data.frame(
   CancerType = cancer_types
 )
 
+num_deaths <- sample(1:10, size = num_records, replace = TRUE)
+
+df_cancer_deaths$NumDeaths <- num_deaths
+
 # Tests
 
 # 1. Basic summary 
@@ -49,8 +53,8 @@ summary(age_trend_model)
 gender_age_test <- t.test(AgeAtDeath ~ Gender, data = df_cancer_deaths)
 print(gender_age_test)
 
-# 10. Visualization
-ggplot(df_cancer_deaths, aes(x = CancerType, y = AgeAtDeath, fill = CancerType)) +
-  geom_boxplot() +
-  theme_minimal() +
-  labs(title = "Age Distribution by Cancer Type", y = "Age at Death", x = "Cancer Type")
+# 10. One-Way ANOVA test
+anova_result <- aov(AgeAtDeath ~ CancerType, data = df_cancer_deaths)
+summary(anova_result)
+
+
